@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LeetCode Streak Tracker</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header class="header">
+      <div class="logo-row">
+        <div class="logo-icon">🔥</div>
+        <div>
+          <h1 class="title">LeetCode Streak</h1>
+          <p class="subtitle">Stay consistent, stay sharp</p>
+        </div>
+      </div>
+    </header>
+
+    <!-- Daily Challenge Card -->
+    <section class="daily-challenge" id="dailyChallenge">
+      <div class="daily-header">
+        <span class="daily-badge">📌 DAILY CHALLENGE</span>
+        <span class="daily-date" id="dailyDate"></span>
+      </div>
+      <div class="daily-loading" id="dailyLoading">
+        <div class="spinner"></div>
+        <span>Fetching today's challenge...</span>
+      </div>
+      <div class="daily-content" id="dailyContent" style="display:none;">
+        <div class="daily-title-row">
+          <span class="daily-number" id="dailyNumber">#</span>
+          <span class="daily-title" id="dailyTitle">Loading...</span>
+        </div>
+        <div class="daily-meta">
+          <span class="daily-difficulty" id="dailyDifficulty">Medium</span>
+          <span class="daily-tags" id="dailyTags"></span>
+        </div>
+        <div class="daily-actions">
+          <button class="btn-solve" id="autoSolveBtn">
+            <span class="btn-solve-icon">⚡</span>
+            <span class="btn-solve-text">Auto Solve</span>
+          </button>
+          <button class="btn-open" id="openProblemBtn" title="Open problem page">
+            ↗ Open
+          </button>
+        </div>
+        <div class="daily-status" id="dailyStatus" style="display:none;">
+          <div class="status-progress">
+            <div class="status-bar" id="statusBar"></div>
+          </div>
+          <span class="status-message" id="statusMessage">Preparing...</span>
+        </div>
+      </div>
+      <div class="daily-error" id="dailyError" style="display:none;">
+        <span>⚠️ Could not fetch daily challenge. Make sure you're logged into LeetCode.</span>
+        <button class="btn-retry" id="retryBtn">Retry</button>
+      </div>
+    </section>
+
+    <!-- Streak Display -->
+    <section class="streak-section">
+      <div class="streak-ring">
+        <svg viewBox="0 0 120 120" class="ring-svg">
+          <defs>
+            <linearGradient id="streakGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#fbbf24" />
+              <stop offset="50%" stop-color="#f59e0b" />
+              <stop offset="100%" stop-color="#f97316" />
+            </linearGradient>
+          </defs>
+          <circle cx="60" cy="60" r="52" class="ring-bg" />
+          <circle cx="60" cy="60" r="52" class="ring-progress" id="streakRing" stroke="url(#streakGradient)" />
+        </svg>
+        <div class="streak-content">
+          <span class="streak-number" id="streakCount">0</span>
+          <span class="streak-label">day streak</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stats Cards -->
+    <section class="stats-grid">
+      <div class="stat-card">
+        <span class="stat-icon">📅</span>
+        <div class="stat-info">
+          <span class="stat-value" id="todayCount">0</span>
+          <span class="stat-title">Today</span>
+        </div>
+      </div>
+      <div class="stat-card">
+        <span class="stat-icon">🏆</span>
+        <div class="stat-info">
+          <span class="stat-value" id="bestStreak">0</span>
+          <span class="stat-title">Best Streak</span>
+        </div>
+      </div>
+      <div class="stat-card">
+        <span class="stat-icon">💪</span>
+        <div class="stat-info">
+          <span class="stat-value" id="totalSolved">0</span>
+          <span class="stat-title">Total Solved</span>
+        </div>
+      </div>
+      <div class="stat-card">
+        <span class="stat-icon">⚡</span>
+        <div class="stat-info">
+          <span class="stat-value" id="weekCount">0</span>
+          <span class="stat-title">This Week</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Weekly Heatmap -->
+    <section class="heatmap-section">
+      <h2 class="section-title">Last 7 Days</h2>
+      <div class="heatmap" id="heatmap"></div>
+    </section>
+
+    <!-- Recent Activity -->
+    <section class="activity-section">
+      <h2 class="section-title">Recent Activity</h2>
+      <div class="activity-list" id="activityList">
+        <div class="empty-state">
+          <span class="empty-icon">📝</span>
+          <p>No problems solved yet.<br>Head to <a href="https://leetcode.com/problemset/" target="_blank">LeetCode</a> and start solving!</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Today's Status -->
+    <div class="today-status" id="todayStatus">
+      <span class="status-dot incomplete"></span>
+      <span class="status-text">No problem solved today</span>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <button class="btn-reset" id="resetBtn" title="Reset all data">Reset Data</button>
+      <span class="version">v1.1.0</span>
+    </footer>
+  </div>
+
+  <!-- Reset Confirmation Modal -->
+  <div class="modal-overlay" id="resetModal">
+    <div class="modal">
+      <h3>Reset All Data?</h3>
+      <p>This will clear your streak, history, and all stats. This cannot be undone.</p>
+      <div class="modal-actions">
+        <button class="btn btn-cancel" id="cancelReset">Cancel</button>
+        <button class="btn btn-danger" id="confirmReset">Reset Everything</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
